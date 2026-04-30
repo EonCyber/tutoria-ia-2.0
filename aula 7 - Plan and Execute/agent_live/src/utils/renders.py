@@ -1,0 +1,53 @@
+from typing import List, Any, Optional
+from rich.console import Group
+from rich.text import Text
+
+STEP_ICONS = {
+    "done":    ("✔", "bold green"),
+    "current": ("►", "bold cyan"),
+    "pending": ("○", "dim"),
+}
+
+class PlanRenderer:
+    def __init__(self):
+        self.steps: List[Any] = []
+        self.current_step: Optional[int] = None
+
+    def set_steps(self, steps: List[Any]):
+        self.steps = steps
+
+    def set_current_step(self, index: int = 0):
+        self.current_step = index
+
+    def _get_step_text(self, step: Any) -> str:
+        # suporta tanto string quanto PlanItem
+        if isinstance(step, str):
+            return step
+        
+        # fallback para seu modelo
+        return getattr(step, "quick_description", str(step))
+
+    def render(self):
+        lines = []
+
+        for i, step in enumerate(self.steps):
+            line = Text()
+
+            if self.current_step is not None:
+                if i < self.current_step:
+                    ico, sty = STEP_ICONS["done"]
+                elif i == self.current_step:
+                    ico, sty = STEP_ICONS["current"]
+                else:
+                    ico, sty = STEP_ICONS["pending"]
+            else:
+                ico, sty = STEP_ICONS["pending"]
+
+            step_text = self._get_step_text(step)
+
+            line.append(f"  {ico} ", style=sty)
+            line.append(f"{i + 1}. {step_text}", style=sty if ico != "○" else "dim")
+            lines.append(line)
+
+        lines.append(Text(""))
+        return Group(*lines)
