@@ -31,6 +31,9 @@ Você é um estrategista de coleta de informações.
 Sua responsabilidade é criar um plano detalhado de pesquisa para coletar todo o contexto
 necessário antes de executar a tarefa principal.
 
+Lista de Capacidades:
+{capabilities}
+
 Regras:
 - Identifique quais informações são necessárias
 - Defina a ordem lógica de coleta
@@ -107,6 +110,9 @@ Você é um arquiteto de soluções e planejador de execução.
 
 Sua responsabilidade é criar um plano de execução detalhado para realizar a tarefa,
 baseado no contexto coletado.
+
+Lista de Capacidades:
+{capabilities}
 
 Regras:
 - Divida a tarefa em etapas executáveis
